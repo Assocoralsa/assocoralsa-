@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cotizador ASSOCORALSA</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #27d9f5;
+            --secondary: #4610c4;
+            --accent: #06B6D4;
+            --whatsapp: #25D366;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+
+
+background: linear-gradient(155deg,#00796B,#002147,#00796B);
+            position: relative;
+            overflow-x: hidden;
+            padding: 10px;
+            touch-action: manipulation;
+        }
+
+        html {
+            height: -webkit-fill-available;
+        }
+
+        /* Container y Card */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Inputs */
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .monto-input {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .monto-input input {
+            width: 100%;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            padding: 0 1rem 0 2rem;
+        }
+
+        .monto-input span {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Plazo Grid */
+        .plazo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .plazo-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            height: 40px;
+        }
+
+        .plazo-button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Cuota Display */
+        .cuota-display {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .cuota-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .cuota-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        /* Tabla */
+        .tabla-amortizacion {
+            margin-top: 1rem;
+            overflow-x: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Botones */
+        .btn-whatsapp, .btn-continuar {
+            width: 100%;
+            height: 48px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            background-size: 200% auto;
+            transition: all 0.3s;
+        }
+
+        .btn-whatsapp {
+            background-image: linear-gradient(45deg, var(--whatsapp) 0%, var(--accent) 51%, var(--whatsapp) 100%);
+        }
+
+        .btn-continuar {
+            background-image: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 51%, var(--primary) 100%);
+        }
+
+        .btn-whatsapp::before, .btn-continuar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: reflectiveButton 2s linear infinite;
+        }
+
+        @keyframes reflectiveButton {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .btn-whatsapp:hover, .btn-continuar:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 360px) {
+            .plazo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cuota-amount {
+                font-size: 1.75rem;
+            }
+
+            th, td {
+                padding: 0.4rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="card">
+                <div class="header">
+                    <button class="back-button" @click="goBack">
+                        ← Atrás
+                    </button>
+                    <h1 class="title">Cotizador de Préstamos</h1>
+                </div>
+
+                <div class="input-section">
+                    <label class="input-label">Monto del préstamo</label>
+                    <div class="monto-input">
+                        <span>Q</span>
+                        <input 
+                            type="number" 
+                            v-model="monto"
+                            @input="validateMonto"
+                            placeholder="Ingrese el monto"
+                        >
+                    </div>
+                    <p v-if="montoError" class="error-message">{{ montoError }}</p>
+                    <p class="input-label">Monto permitido: Q500 - Q15,000</p>
+                </div>
+
+                <div class="plazo-section">
+                    <label class="input-label">Plazo en meses</label>
+                    <div class="plazo-grid">
+                        <button 
+                            v-for="p in plazosDisponibles" 
+                            :key="p"
+                            :class="['plazo-button', { active: plazo === p }]"
+                            @click="plazo = p"
+                        >
+                            {{ p }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cuota-display">
+                    <p class="cuota-label">Cuota mensual estimada</p>
+                    <p class="cuota-amount">Q{{ cuotaMensual.toFixed(2) }}</p>
+                    <p class="tasa-info">Tasa anual: {{ isSocio ? '12%' : '13%' }}</p>
+                </div>
+
+                <div class="tabla-amortizacion">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Cuota</th>
+                                <th>Capital</th>
+                                <th>Interés</th>
+                                <th>Saldo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="pago in tablaPagos" :key="pago.mes">
+                                <td>{{ pago.mes }}</td>
+                                <td>Q{{ pago.cuota }}</td>
+                                <td>Q{{ pago.capital }}</td>
+                                <td>Q{{ pago.interes }}</td>
+                                <td>Q{{ pago.saldo }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="https://wa.me/50248966742" target="_blank" class="btn-whatsapp">
+                    Validar cotización
+                </a>
+
+                <button class="btn-continuar" @click="continuarFormulario">
+                    Continuar con la solicitud
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+        monto: '',
+        plazo: 3,
+        montoError: '',
+        isSocio: localStorage.getItem('tasaInteres') === '12',
+        tablaPagos: []
+                }
+            },
+
+
+// Agregar el mounted
+    mounted() {
+        // Obtener la tasa almacenada
+        const tasaInteres = localStorage.getItem('tasaInteres');
+        if (tasaInteres) {
+            this.isSocio = tasaInteres === '12';
+        }
+
+  // Inicializar tabla de pagos
+        this.generarTablaPagos();
+    },
+            computed: {
+                plazosDisponibles() {
+                    const maxPlazo = this.getPlazoMaximo();
+                    return [3, 6, 8, 12, 16, 24, 30, 36].filter(p => p <= maxPlazo);
+                },
+                cuotaMensual() {
+                    if (!this.monto || this.montoError) return 0;
+                    return this.calcularCuota();
+                }
+            },
+            methods: {
+                getPlazoMaximo() {
+                    const monto = Number(this.monto);
+                    if (monto <= 2500) return 12;
+                    if (monto <= 5000) return 18;
+                    if (monto <= 7500) return 24;
+                    if (monto <= 10000) return 30;
+                    return 36;
+                },
+                validateMonto() {
+                    const monto = Number(this.monto);
+                    if (isNaN(monto)) {
+                        this.montoError = 'Ingrese un monto válido';
+                        return false;
+                    }
+                    if (monto < 500) {
+                        this.montoError = 'El monto mínimo es Q500';
+                        return false;
+                    }
+                    if (monto > 15000) {
+                        this.montoError = 'El monto máximo es Q15,000';
+                        return false;
+                    }
+                    this.montoError = '';
+                    this.generarTablaPagos();
+                    return true;
+                },
+                calcularCuota() {
+                    const tasaAnual = this.isSocio ? 0.12 : 0.13;
+                    const tasaMensual = tasaAnual / 12;
+                    return this.monto * (tasaMensual * Math.pow(1 + tasaMensual, this.plazo)) / 
+                           (Math.pow(1 + tasaMensual, this.plazo) - 1);
+                },
+                generarTablaPagos() {
+                    if (!this.monto || this.montoError) {
+                        this.tablaPagos = [];
+                        return;
+                    }
+
+                    const tasaAnual = this.isSocio ? 0.12 : 0.13;
+                    const tasaMensual = tasaAnual / 12;
+                    const cuotaMensual = this.calcularCuota();
+                    let saldo = Number(this.monto);
+                    const pagos = [];
+
+                    for (let i = 1; i <= this.plazo; i++) {
+                        const interesMes = saldo * tasaMensual;
+                        const capitalMes = cuotaMensual - interesMes;
+                        saldo -= capitalMes;
+                        
+                        pagos.push({
+                            mes: i,
+                            cuota: cuotaMensual.toFixed(2),
+                            interes: interesMes.toFixed(2),
+                            capital: capitalMes.toFixed(2),
+                            saldo: Math.max(0, saldo).toFixed(2)
+                        });
+                    }
+
+                    this.tablaPagos = pagos;
+                },
+                goBack() {
+                    window.location.href = 'index.html';
+                },
+                continuarFormulario() {
+                    if (!this.monto || this.montoError) {
+                        alert('Por favor, ingrese un monto válido');
+                        return;
+                    }
+                    window.location.href = 'formulario.html';
+                }
+            },
+            watch: {
+                plazo() {
+                    this.generarTablaPagos();
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

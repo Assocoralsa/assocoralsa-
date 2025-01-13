@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Previous head content remains the same -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* [Previous styles remain the same until hero section] */
+
+
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+
+background: linear-gradient(160deg, #002147,
+#10c48b
+ , #004080, #a610c4); 	
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-container {
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            align-items: baseline;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .title span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .letter-a {
+            animation: fadeInUp 0.5s ease forwards 0.2s;
+        }
+
+        .letter-sso {
+            animation: fadeInUp 0.5s ease forwards 0.4s;
+            color: #fbbf24;
+        }
+
+        .letter-coralsa {
+            animation: fadeInUp 0.5s ease forwards 0.6s;
+        }
+
+        .slogan {
+            color: rgba(255, 255, 255, 0.9);
+            font-size:clamp(1rem, 2vw, 1.1rem);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards 0.8s;
+            letter-spacing: 0.5px;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content {
+            max-width: 450px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: clamp(1.25rem, 3vw, 2rem);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tasa-info {
+            background: linear-gradient(135deg, #eb7723, #7c3aed);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+            margin: 2rem 0;
+            text-align: center;
+transition: all 0.3s ease;
+overflow: hidden;
+        }
+
+        .switch-container {
+            margin:clamp(1.5rem, 2.5vw, 2rem) 0;
+        }
+
+        .switch-title {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .switch {
+            width: 100%;
+            height: clamp(50px, 8vw, 60px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .switch-handle {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: #14a6a1;
+            border-radius: 30px;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .switch.active .switch-handle {
+            transform: translateX(100%);
+        }
+
+        .switch-option {
+            flex: 1;
+            text-align: center;
+            color: white;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+            user-select: none;
+        }
+
+        .switch-option:first-child {
+            opacity: 1;
+        }
+
+        .switch-option:last-child {
+            opacity: 0.5;
+        }
+
+        .switch.active .switch-option:first-child {
+            opacity: 0.5;
+        }
+
+        .switch.active .switch-option:last-child {
+            opacity: 1;
+        }
+
+        .codigo-section {
+            display: none;
+opacity: 0;
+            color: white;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+
+        }
+
+        .codigo-section.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-label {
+            color: white;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #fbbf24;
+        }
+
+        .btn-continuar {
+            width: 100%;
+            padding: clamp(0.875rem, 2vw, 1rem);
+            margin-top: clamp(1.5rem, 2.5vw, 2rem);
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-continuar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-continuar::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255,255,255,0.1);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-continuar:hover::after {
+            transform: translate(-50%, -50%) rotate(405deg);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: clamp(0.8rem, 1.5vw, 0.875rem)
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        
+        /* Estilos para el botón animado */
+        .scroll-button {
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+            padding-block: 0.5rem;
+            padding-inline: 1.25rem;
+            background-color: transparent;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff;
+            gap: 10px;
+            font-weight: bold;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            outline: none;
+            overflow: hidden;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards 1s;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease-in-out;
+            transform: rotate(90deg); /* Rotamos el ícono para que apunte hacia abajo */
+        }
+
+        .scroll-button:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .scroll-button:hover .icon {
+            transform: rotate(90deg) translate(4px);
+        }
+
+        .scroll-button:hover::before {
+            animation: shine 1.5s ease-out infinite;
+        }
+
+        .scroll-button::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100%;
+            background-image: linear-gradient(
+                120deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.8),
+                rgba(255, 255, 255, 0) 70%
+            );
+            top: 0;
+            left: -100px;
+            opacity: 0.6;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100px;
+            }
+            60% {
+                left: 100%;
+            }
+            to {
+                left: 100%;
+            }
+        }
+
+
+@media (max-width: 480px) {
+    .section {
+        padding: 15px;
+    }
+
+    .content {
+        width: 95%;
+    }
+
+    .tasa-info {
+        margin: 1rem 0;
+    }
+
+    .switch-container {
+        margin: 1.25rem 0;
+    }
+}
+        /* [Rest of your previous styles remain the same] */
+        
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="section hero">
+        <div class="logo-container">
+            <h1 class="title">
+                <span class="letter-a">A</span>
+                <span class="letter-sso">SSO</span>
+                <span class="letter-coralsa">CORALSA</span>
+            </h1>
+        </div>
+        <p class="slogan">Tu solución financiera confiable</p>
+        <!-- New animated button -->
+        <button class="scroll-button">
+            Descubre más
+            <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                <path
+                    clip-rule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                    fill-rule="evenodd"
+                ></path>
+            </svg>
+        </button>
+    </section>
+
+    <!-- [Rest of your previous content remains the same] -->
+
+
+
+<!-- Content Section -->
+    <section class="section">
+        <div class="content">
+            <div class="tasa-info">
+                <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
+                    Tasa preferencial: <span id="tasa">13%</span> anual
+                </h2>
+                <p id="tasa-mensaje">¡Hazte socio y obtén una mejor tasa!</p>
+            </div>
+
+            <div class="switch-container">
+                <h3 class="switch-title">¿Es usted socio?</h3>
+                <div class="switch" id="socio-switch">
+                    <div class="switch-handle"></div>
+                    <div class="switch-option">No soy socio</div>
+                    <div class="switch-option">Soy socio</div>
+                </div>
+            </div>
+
+            <div class="codigo-section" id="codigo-section">
+                <label class="input-label">
+                    Ingrese su código de socio
+                </label>
+                <input 
+                    id="codigo-input"
+                    class="input"
+                    placeholder="Ej: 1234"	
+                    type="text"
+                >
+                <p class="error-message" id="error-message">
+                    ⚠️ El código debe tener al menos 4 caracteres
+                </p>
+            </div>
+
+            <button class="btn-continuar" id="btn-continuar">
+                Continuar al cotizador
+            </button>
+        </div>
+    </section>
+
+
+
+    <script>
+        // [Previous script content remains the same]
+
+document.addEventListener('DOMContentLoaded', function() {
+    const switchElement = document.getElementById('socio-switch');
+    const tasaElement = document.getElementById('tasa');
+    const tasaMensaje = document.getElementById('tasa-mensaje');
+    const btnContinuar = document.getElementById('btn-continuar');
+
+    let isSocio = false;
+
+    switchElement.addEventListener('click', function() {
+        isSocio = !isSocio;
+        this.classList.toggle('active');
+        
+        const tasaValue = isSocio ? 12 : 13;
+        tasaElement.textContent = tasaValue + '%';
+        tasaMensaje.textContent = isSocio 
+            ? '¡Beneficio exclusivo para socios!' 
+            : '¡Hazte socio y obtén una mejor tasa!';
+    });
+
+    btnContinuar.addEventListener('click', function() {
+        // Guardamos la tasa actual antes de redirigir
+        const tasaActual = isSocio ? 12 : 13;
+        localStorage.setItem('tasaInteres', tasaActual);
+        window.location.href = 'cotizador.html';
+
+
+// Add smooth scroll functionality
+document.querySelector('.scroll-button').addEventListener('click', () => {
+    document.querySelector('.content').scrollIntoView({
+        behavior: 'smooth'
+    });
+});
+
+
+
+;;
+            });
+        });
+
+
+        // Add smooth scroll functionality to the new button
+        document.querySelector('.scroll-button').addEventListener('click', () => {
+            document.querySelector('.content').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
